@@ -152,7 +152,7 @@ public class Vektoren extends PApplet {
 
 		// Draw the resulting vector
 		translate(0, 200); // Absolut: (cwidth/2, 600)
-		stroke(0, 255, 0); // grün-blau ist türkis
+		stroke(0, 255, 0); // nur grün
 		strokeWeight(1);
 		line(0, 0, distanceCOGM1.x, distanceCOGM1.y);
 
