@@ -24,11 +24,11 @@ public class Vektoren extends PApplet {
 	int cheight = 800;
 	int bottomheight = cheight - 30; // Bodenlinie hat die y- Koordinate 50 höher als Untergrenze
 
-	PVector pos1 = new PVector(100, 400); // Objekt Vektor pos1 wird erzeugt und positioniert
+	PVector pos1 = new PVector(600, 300); // Objekt Vektor pos1 wird erzeugt und positioniert
 	// PVector pos2 = new PVector(cwidth, 200);
 	// float speeddelta = (float) 0.0;
 	float yspeed = 1;
-	PVector speed1 = new PVector(1, 1, 0); // fliegt mit 1 in x Richtung
+	PVector speed1 = new PVector(5, 2, 0); // fliegt mit 1 in x Richtung
 	PVector speed2 = new PVector(-1, 1, 0); // fliegt mit in Gegenrichtung -1 in x Richtung
 	PVector speedDelta1 = new PVector((float) 0.0, (float) 0.0); // speedDelta ist Beschleunigung Wert 0.1 nach unten
 	PVector speedDelta2 = new PVector((float) 0.0, (float) 0.1); // speedDelta ist Beschleunigung - was sonst
@@ -90,7 +90,7 @@ public class Vektoren extends PApplet {
 		/**
 		 * aForce ist eine Vektor der Anziehungskraft Seine Richtung ist durch den
 		 * Vektor distanceCOGM1 gegeben. Seine Größe ist const / (mag distanceCOGM1.mag)
-		 * Der Kraftvektor wird NICHTbenutzt, weil direkt die Beschleunigung eingetragen
+		 * Der Kraftvektor wird NICHT benutzt, weil direkt die Beschleunigung eingetragen
 		 * wird.
 		 */
 		// PVector aForce = new PVector(); // VEKTOR ANZIEHUNGSKRAFT
@@ -133,26 +133,26 @@ public class Vektoren extends PApplet {
 		speedDeltaMasse1.x = distanceCOGM1.x; // der normalisiertte Abstandsvektor wird im Vektor 'speedDeltaMasse1' ges
 		speedDeltaMasse1.y = distanceCOGM1.y; // gespeichert. distanceCOGM1 und speedDeltaMasse1 sind ist jetzt
 												// Richtungsvektoren mit Betrag 1
-		speedDeltaMasse1.mult(4000 / (dist1 * dist1)); // Hier wird der Betrag der Beschleunigung hinzugerechnet
-
+		speedDeltaMasse1.mult(2000 / (dist1 * dist1)); // Hier wird der Betrag der Beschleunigung hinzugerechnet
+		
 // für die Beschleunigung, Kopieren des normalisierten Vektors zur Masse2
 		speedDeltaMasse2.x = distanceCOGM2.x; // der normalisiertte Abstandsvektor wird im Vektor 'speedDeltaMasse1' ges
 		speedDeltaMasse2.y = distanceCOGM2.y; // gespeichert. distanceCOGM1 und speedDeltaMasse1 sind ist jetzt
 												// Richtungsvektoren mit Betrag 1
-		speedDeltaMasse2.mult(1000 / (dist2 * dist2)); // Hier wird der Betrag der Beschleunigung hinzugerechnet
+		speedDeltaMasse2.mult(2000 / (dist2 * dist2)); // Hier wird der Betrag der Beschleunigung hinzugerechnet
+
+		System.out.println( "  dist1 " + dist1 + " |" + " speedDeltaMasse1.mag  " + speedDeltaMasse1.mag() + " speedDeltaMasse2.mag  " + speedDeltaMasse2.mag() ) ;
 
 		// für die Darstellung
 		distanceCOGM1.mult(100 * 200 / dist1); // ein Vektor mit der invertierten Größe wird gezeichnet, simuliert die
 												// Abnahme der Anziehung mit dem Anwachsen der Entfernung
-		
+
 		distanceCOGM2.mult(100 * 200 / dist2); // ein Vektor mit der invertierten Größe wird gezeichnet, simuliert die
 		// Abnahme der Anziehung mit dem Anwachsen der Entfernung
-		
-		
-		
+
 		// Draw the resulting vector
 		translate(0, 200); // Absolut: (cwidth/2, 600)
-		stroke(0, 255, 255); // grün-blau ist türkis
+		stroke(0, 255, 0); // grün-blau ist türkis
 		strokeWeight(1);
 		line(0, 0, distanceCOGM1.x, distanceCOGM1.y);
 
@@ -162,23 +162,22 @@ public class Vektoren extends PApplet {
 		strokeWeight(1);
 		line(0, 0, distanceCOGM2.x, distanceCOGM2.y);
 
-		
-		
-		
-		speed1.add(speedDeltaMasse1); // beschleunigte Bewegung, Die aktuelle Geschwindigkeit wird  durhc die Masse 1 erhöht.
-		speed1.add(speedDeltaMasse2); // beschleunigte Bewegung, Die aktuelle Geschwindigkeit wird  durhc die Masse 2 erhöht.
-		
+		speed1.add(speedDeltaMasse1); // beschleunigte Bewegung, Die aktuelle Geschwindigkeit wird durhc die Masse 1
+										// erhöht.
+		speed1.add(speedDeltaMasse2); // beschleunigte Bewegung, Die aktuelle Geschwindigkeit wird durhc die Masse 2
+										// erhöht.
+
 		pos1.add(speed1);// Der nächste Schritt wird ausgeführt, je höher die Geschwindigkeit um so
 							// größer ist der Schritt
 // 		pos2.add(speed2);
 //		System.out.println(
 //				pos1.y + " Speed " + speed1.y + " mag " + pos1.mag() + "  aZx " + distanceCOGM1.x + " aZy " + distanceCOGM1.y);
 //      Das ist aktuelle der Stopper
-//		if (pos1.y < 0) {
-//			noLoop();
-		}
+		if (dist1 > 600) {
+			noLoop();
+	     }
 
-//	}
+	}
 
 	/**
 	 * accelerate soll die aktuelle Geschwindigkeit einlesen und verändern Da Objekt
